@@ -40,7 +40,7 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
         .then( sauce => {
-            if (thing.userId != req.auth.userId) {
+            if (sauce.userId != req.auth.userId) {
                 res.status(401).json({ message: 'Non autorisé'})
             } else {
                 const filename = sauce.imageUrl.split('/images/')[1];
@@ -51,7 +51,7 @@ exports.deleteSauce = (req, res, next) => {
                 });
             }
         })
-        .catch((error) => res.status(500).json({ error }))
+        .catch((error) => {res.status(500).json({ error })})
 }
 
 exports.getOneSauce = (req, res, next) => {
@@ -71,11 +71,11 @@ exports.likeAndDislikeSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
 
-    switch (req.body.likes) {
-
+    switch (req.body.like) {
+        
         case 1:
             // Condition >> Si l'userId n'est pas ds le Array usersLiked et si like === 1 on ajoute le userId ds le Array usersLiked
-            if (!sauce.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
+            if (!sauce.usersLiked.includes(req.body.userId) && req.body.like === 1) {
                 Sauce.updateOne(
                     { _id: req.params.id },
                     {
@@ -90,7 +90,7 @@ exports.likeAndDislikeSauce = (req, res, next) => {
 
         case -1:    
             // Condition >> Si l'userId n'est pas ds le Array usersDisliked et si dislike === 1 on ajoute le userId ds le Array usersDisliked
-            if (!sauce.usersDisliked.includes(req.body.userId) && req.body.likes === -1) {
+            if (!sauce.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
                 Sauce.updateOne(
                     { _id: req.params.id },
                     {
@@ -118,7 +118,7 @@ exports.likeAndDislikeSauce = (req, res, next) => {
                     .catch((error) => res.status(400).json({ error }))
 
             // Condition >> Si l'userId est ds le Array usersDisliked et si dislike === 0 on enlève le userId ds le Array usersDisliked
-            } else if (sauce.usersDisliked.includes(req.body.userId) && req.body.likes === 0) 
+            } else if (sauce.usersDisliked.includes(req.body.userId) && req.body.like === 0) 
             {
                 Sauce.updateOne(
                     { _id: req.params.id },
