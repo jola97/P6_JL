@@ -1,3 +1,4 @@
+// Importation du package http pour créer un serveur et importation du fichier app.js
 const http = require('http');
 const app = require('./app');
 

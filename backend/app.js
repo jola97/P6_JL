@@ -19,6 +19,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+// Middleware qui met à disposition le body qui ont comme content-Type application/json
 app.use(express.json());
 
 // Middleware pour gérer les en-têtes CORS
@@ -29,10 +30,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
 
+// Exportation de l'app
 module.exports = app;
 

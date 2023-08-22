@@ -1,7 +1,9 @@
+// Importations des packages
 const { error, log } = require('console');
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
+// Exportations des routes (La logique metier)
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
