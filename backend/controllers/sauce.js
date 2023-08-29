@@ -2,6 +2,8 @@
 const { error, log } = require('console');
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
+require('dotenv').config()
+
 
 // Exportations des routes (La logique metier)
 exports.createSauce = (req, res, next) => {
@@ -11,7 +13,8 @@ exports.createSauce = (req, res, next) => {
     const sauce = new Sauce({
         ...sauceObject,
         _userId: req.auth.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        //imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${process.env.DEV}/images/${req.file.filename}`
     });
     sauce.save()
     .then(() => { res.status(201).json({ message: 'Sauce enregistré !' })})
@@ -21,7 +24,8 @@ exports.createSauce = (req, res, next) => {
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        //imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${process.env.DEV}/images/${req.file.filename}`
     } : {
         ...req.body
     };

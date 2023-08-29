@@ -19,7 +19,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-// Middleware qui met à disposition le body qui ont comme content-Type application/json
+// Middleware qui met à disposition le body qui ont comme content-Type application/json (récupère le body pour POST)
 app.use(express.json());
 
 // Middleware pour gérer les en-têtes CORS
